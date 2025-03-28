@@ -25,7 +25,7 @@ services:
 
   # Next.js frontend application
   nextjs:
-    image: cleanride-webui
+    image: ghcr.io/liemeldert/cleanride-webui:latest
     container_name: cleanride-webui
     restart: always
     ports:
@@ -42,7 +42,7 @@ services:
 
   # GTFS Parser for regular schedule data (daily)
   gtfs-regular:
-    image: gtfs-mongo-parser
+    image: ghcr.io/liemeldert/gtfs-mongo-parser:latest
     container_name: cleanride-gtfs-parse-regular
     restart: always
     environment:
@@ -62,7 +62,7 @@ services:
 
   # GTFS Parser for supplemented data (every 15 minutes)
   gtfs-supplemented:
-    image: gtfs-mongo-parser
+    image: ghcr.io/liemeldert/gtfs-mongo-parser:latest
     container_name: cleanride-gtfs-parse-supplemented
     restart: always
     environment:
