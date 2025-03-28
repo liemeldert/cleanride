@@ -2,9 +2,10 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-console.log(process.env.MONGODB_URI);
+// Check if we're in a build/SSG context
+const isServerRendering = typeof window === 'undefined' && process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
+if (!MONGODB_URI && !isServerRendering) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
