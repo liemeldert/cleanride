@@ -18,7 +18,7 @@
     "jszip": "^3.10.1",
     "leaflet": "^1.9.4",
     "mongoose": "^8.12.1",
-    "next": "15.2.2",
+    "next": "15.2.3",
     "next-auth": "^4.24.11",
     "papaparse": "^5.5.2",
     "protobufjs": "^7.2.5",
