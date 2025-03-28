@@ -30,3 +30,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/cleanride-webui:stable
             ghcr.io/${{ github.repository_owner }}/cleanride-webui:${{ github.ref_name }}
+
+      - name: Update Service via Webhook
+        uses: newarifrh/portainer-service-webhook@v1
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
