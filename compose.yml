@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # MongoDB database
+  mongodb:
+    image: mongo:latest
+    container_name: cleanride-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: securepassword
+      MONGO_INITDB_DATABASE: cleanride
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - cleanride-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Next.js frontend application
+  nextjs:
+    image: cleanride-webui
+    container_name: cleanride-webui
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://root:securepassword@mongodb:27017/cleanride?authSource=admin
+      - NODE_ENV=production
+      - NEXTAUTH_SECRET=your_nextauth_secret_here
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - cleanride-network
+
+  # GTFS Parser for regular schedule data (daily)
+  gtfs-regular:
+    image: gtfs-mongo-parser
+    container_name: cleanride-gtfs-parse-regular
+    restart: always
+    environment:
+      - MONGODB_URI=mongodb://root:securepassword@mongodb:27017/cleanride?authSource=admin
+    command: >
+      sh -c "while true; do 
+              echo \"Running regular GTFS data update at $$(date)\"; 
+              python /app/main.py --regular; 
+              echo \"Sleeping for 24 hours...\"; 
+              sleep 86400; 
+            done"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - cleanride-network
+
+  # GTFS Parser for supplemented data (every 15 minutes)
+  gtfs-supplemented:
+    image: gtfs-mongo-parser
+    container_name: cleanride-gtfs-parse-supplemented
+    restart: always
+    environment:
+      - MONGODB_URI=mongodb://root:securepassword@mongodb:27017/cleanride?authSource=admin
+    command: >
+      sh -c "while true; do 
+              echo \"Running supplemented GTFS data update at $$(date)\"; 
+              python /app/main.py --supplemented; 
+              echo \"Sleeping for 15 minutes...\"; 
+              sleep 900; 
+            done"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - cleanride-network
+
+networks:
+  cleanride-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

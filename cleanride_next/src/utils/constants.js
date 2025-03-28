@@ -1,0 +1,33 @@
+export const ISSUE_TYPES = [
+    { id: 'CLEANLINESS', label: 'Cleanliness Issue', color: 'bg-yellow-500', icon: 'trash' },
+    { id: 'MAINTENANCE', label: 'Maintenance Problem', color: 'bg-blue-500', icon: 'tools' },
+    { id: 'SAFETY', label: 'Safety Concern', color: 'bg-red-500', icon: 'exclamation-triangle', urgent: true },
+    { id: 'COMFORT', label: 'Comfort Issue', color: 'bg-green-500', icon: 'thermometer-half' },
+    { id: 'OTHER', label: 'Other Issue', color: 'bg-gray-500', icon: 'question-circle' },
+  ];
+  
+export const TRAIN_LINES = [
+  { id: '1', color: 'mta-red' },
+  { id: '2', color: 'mta-red' },
+  { id: '3', color: 'mta-red' },
+  { id: '4', color: 'mta-green' },
+  { id: '5', color: 'mta-green' },
+  { id: '6', color: 'mta-green' },
+  { id: '7', color: 'mta-purple' },
+  { id: 'A', color: 'mta-blue' },
+  { id: 'C', color: 'mta-blue' },
+  { id: 'E', color: 'mta-blue' },
+  { id: 'B', color: 'mta-orange' },
+  { id: 'D', color: 'mta-orange' },
+  { id: 'F', color: 'mta-orange' },
+  { id: 'M', color: 'mta-orange' },
+  { id: 'G', color: 'mta-green' },
+  { id: 'J', color: 'mta-brown' },
+  { id: 'Z', color: 'mta-brown' },
+  { id: 'L', color: 'mta-gray' },
+  { id: 'N', color: 'mta-yellow' },
+  { id: 'Q', color: 'mta-yellow' },
+  { id: 'R', color: 'mta-yellow' },
+  { id: 'W', color: 'mta-yellow' },
+  { id: 'S', color: 'mta-gray' },
+];
